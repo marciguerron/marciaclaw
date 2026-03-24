@@ -1,0 +1,217 @@
+# ⚙️ Configuración de Servicios - MarciaClaw
+# Este archivo NO contiene valores sensibles
+# Usa variables de entorno para valores reales
+
+# ============================================
+# YOUTUBE DATA API v3
+# ============================================
+youtube:
+  api_key: ${YOUTUBE_API_KEY}
+  client_id: ${YOUTUBE_CLIENT_ID}
+  client_secret: ${YOUTUBE_CLIENT_SECRET}
+  quota_limit: 10000
+  max_results: 50
+  timeout: 30000
+  # Códigos de países para filtrar resultados
+  region_codes:
+    - MX  # México
+    - ES  # España
+    - US  # Estados Unidos
+  # Idiomas soportados
+  languages:
+    - es  # Español
+    - en  # Inglés
+  #nichos de investigación
+  niches:
+    - finanzas
+    - abundancia
+    - prosperidad
+    - dinero
+    - deudas
+    - mentalidad
+    - desarrollo personal
+
+# ============================================
+# SUPABASE (PostgreSQL)
+# ============================================
+supabase:
+  url: ${SUPABASE_URL}
+  key: ${SUPABASE_KEY}
+  table_prefix: marcia_
+  # Tablas del sistema
+  tables:
+    channels: marcia_channels
+    shorts: marcia_shorts
+    research: marcia_research
+    memory: marcia_memory
+  # Configuración de conexión
+  pool:
+    max: 10
+    idle_timeout: 30000
+    connection_timeout: 5000
+  # Habilitar RLS por defecto
+  rls_enabled: true
+
+# ============================================
+# PERPLEXITY AI (Búsquedas Web)
+# ============================================
+perplexity:
+  api_key: ${PERPLEXITY_API_KEY}
+  timeout: 60000
+  max_tokens: 8000
+  # Modelos disponibles
+  models:
+    default: sonar
+    research: sonar-pro
+    large: llama-3.1-sonar-large-128k-online
+    small: llama-3.1-sonar-small-128k-online
+  # Configuración de búsqueda
+  search:
+    freshness: year
+    country: MX
+    language: es
+  # Límites
+  rate_limit:
+    requests_per_minute: 10
+    tokens_per_minute: 100000
+
+# ============================================
+# OPENCLAW
+# ============================================
+openclaw:
+  url: ${OPENCLAW_URL}
+  api_key: ${OPENCLAW_API_KEY}
+  session_id: ${OPENCLAW_SESSION_ID}
+  # Canales soportados
+  channels:
+    - telegram
+    - whatsapp
+    - discord
+    - signal
+  # Configuración de mensajes
+  messages:
+    max_length: 4000
+    typing_indicator: true
+    parse_mode: markdown
+  # TTS
+  tts:
+    default_voice: Nova
+    default_language: es
+    auto_send_audio: false
+
+# ============================================
+# ELEVENLABS (Text-to-Speech)
+# ============================================
+elevenlabs:
+  api_key: ${ELEVENLABS_API_KEY}
+  default_voice: Nova
+  default_model: eleven_multilingual_v2
+  settings:
+    stability: 0.5
+    similarity_boost: 0.75
+    style: 0.0
+    use_speaker_boost: true
+  # Voces disponibles
+  voices:
+    - id: "21m00Tcm4TlvDq8ikWAM"
+      name: "Rachel"
+      labels:
+        accent: "american"
+        gender: "female"
+        age: "young"
+    - id: "AZnzlk1XvdvUeBnJXgZI"
+      name: "Domi"
+      labels:
+        accent: "american"
+        gender: "female"
+        age: "middle_aged"
+    - id: "EXAVITQu4vr4xnSDxMaL"
+      name: "Bella"
+      labels:
+        accent: "american"
+        gender: "female"
+        age: "young"
+    - id: "nPczCjz82KWdKScP46A1"
+      name: "Antoni"
+      labels:
+        accent: "american"
+        gender: "male"
+        age: "middle_aged"
+    - id: "ErXwobaYiN019PkySvjV"
+      name: "Arthur"
+      labels:
+        accent: "british"
+        gender: "male"
+        age: "older"
+
+# ============================================
+# BROWSER AUTOMATION
+# ============================================
+browser:
+  headless: true
+  timeout: 30000
+  # Viewport por defecto
+  viewport:
+    width: 1280
+    height: 720
+  # Perfiles
+  profile:
+    default: ~/.cache/marciaclaw/browser
+    user: ~/.config/google-chrome
+  # Configuración de YouTube
+  youtube:
+    accept_cookies: true
+    wait_for_shortstab: true
+    scroll_pause: 1000
+  # Headless mode para producción
+  production:
+    headless: true
+    args:
+      - "--no-sandbox"
+      - "--disable-dev-shm-usage"
+      - "--disable-gpu"
+
+# ============================================
+# GITHUB
+# ============================================
+github:
+  token: ${GITHUB_TOKEN}
+  owner: marciguerron
+  repo: marciaclaw
+  branch: main
+  # Configuración de sync
+  sync:
+    auto_commit: false
+    commit_prefix: "chore:"
+    push_after_commit: true
+
+# ============================================
+# APLICACIÓN
+# ============================================
+app:
+  name: MarciaClaw
+  version: 1.0.0
+  # Timezone por defecto
+  timezone: UTC
+  # Directorios
+  directories:
+    docs: docs
+    config: config
+    scripts: scripts
+    integrations: integrations
+    services: services
+    memory: memory
+    templates: templates
+    utils: utils
+  # Logging
+  logging:
+    level: info
+    format: json
+    file: logs/app.log
+  # Features habilitadas
+  features:
+    tts: true
+    voice_input: false
+    auto_research: false
+    heartbeat: true
+    memory_persistence: true
